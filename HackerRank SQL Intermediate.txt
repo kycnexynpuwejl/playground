@@ -1,4 +1,4 @@
-# Business Expansion
+### Business Expansion
 
 SELECT u.id, u.first_name, u.last_name, c.id, c.customer_name, count(*)
     FROM contact
@@ -7,7 +7,7 @@ JOIN customer c ON c.id = contact.customer_id
 GROUP BY u.id, u.first_name, u.last_name, c.id, c.customer_name
 HAVING count(*) > 1;
 
-# Invoices per Country
+### Invoices per Country
 
 SELECT c.country_name, COUNT(*), AVG(total_price)
     FROM country c
