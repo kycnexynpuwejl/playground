@@ -1,0 +1,18 @@
+### Business Expansion
+
+SELECT u.id, u.first_name, u.last_name, c.id, c.customer_name, count(*)
+    FROM contact
+JOIN user_account u ON u.id = contact.user_account_id
+JOIN customer c ON c.id = contact.customer_id
+GROUP BY u.id, u.first_name, u.last_name, c.id, c.customer_name
+HAVING count(*) > 1;
+
+### Invoices per Country
+
+SELECT c.country_name, COUNT(*), AVG(total_price)
+    FROM country c
+    JOIN city ci ON ci.country_id = c.id
+    JOIN customer cus ON cus.city_id = ci.id
+    JOIN invoice i ON i.customer_id = cus.id
+GROUP BY c.country_name
+HAVING AVG(total_price) > (SELECT AVG(total_price) FROM invoice);
