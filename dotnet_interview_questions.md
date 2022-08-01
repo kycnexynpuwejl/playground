@@ -79,3 +79,10 @@ AFTER: выполняется после выполнения действия. 
 INSTEAD OF: выполняется вместо действия (то есть по сути действие - добавление, изменение или удаление - вообще не выполняется). Определяется для таблиц и представлений
 
 > https://metanit.com/sql/sqlserver/12.1.php
+
+### 5. Server-side pagination with EntityFramework and raw SQL
+
+1. EntityFramework - dbSet.Skip(a).Take(b)
+   
+2. 1. Raw SQL LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
+3. 2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
