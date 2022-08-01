@@ -87,3 +87,30 @@ INSTEAD OF: выполняется вместо действия (то есть 
 2. Raw SQL
    1. LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
    2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
+
+### 6. How does the .NET framework work?
+
+- .NET framework-based applications that are written in supportive languages like C#, F#, or Visual basic are compiled to Common Intermediate Language (CIL).
+- Compiled code is stored in the form of an assembly file that has a .dll or .exe file extension.
+- When the .NET application runs, Common Language Runtime (CLR) takes the assembly file and converts the CIL into machine code with the help of the Just In Time(JIT) compiler.
+- Now, this machine code can execute on the specific architecture of the computer it is running on.
+
+### 7. Differences between value type and reference type
+
+- A Value Type holds the actual data directly within the memory location and a reference type contains a pointer which consists of the address of another memory location that holds the actual data.
+- Value type stores its contents on the stack memory and reference type stores its contents on the heap memory.
+- Assigning a value type variable to another variable will copy the value directly and assigning a reference variable to another doesn’t copy the value, instead, it creates a second copy of the reference.
+- Predefined data types, structures, enums are examples of value types. Classes, Objects, Arrays, Indexers, Interfaces, etc are examples of reference types.
+
+### 8. SOLID
+
+- single responsibility principle
+  > для каждого класса должно быть определено единственное назначение. Все ресурсы, необходимые для его осуществления, должны быть инкапсулированы в этот класс и подчинены только этой задаче
+- open-closed principle
+  > программные сущности … должны быть открыты для расширения, но закрыты для модификации
+- Liskov substitution principle
+  > функции, которые используют базовый тип, должны иметь возможность использовать подтипы базового типа не зная об этом
+- interface segregation principle
+  > много интерфейсов, специально предназначенных для клиентов, лучше, чем один интерфейс общего назначения
+- dependency inversion principle
+  > зависимость на абстракциях, нет зависимости на что-то конкретное
