@@ -84,5 +84,6 @@ INSTEAD OF: выполняется вместо действия (то есть 
 
 1. EntityFramework - dbSet.Skip(a).Take(b)
    
-2. 1. Raw SQL LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
-3. 2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
+2. Raw SQL
+   1. LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
+   2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
