@@ -82,7 +82,7 @@ INSTEAD OF: выполняется вместо действия (то есть 
 
 ### 5. Server-side pagination with EntityFramework and raw SQL
 
-1. EntityFramework - dbSet.Skip(a).Take(b)
+1. EntityFramework - DbContext.DbSet.Skip(a).Take(b)
    
 2. Raw SQL
    1. LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
@@ -95,32 +95,26 @@ INSTEAD OF: выполняется вместо действия (то есть 
 - When the .NET application runs, Common Language Runtime (CLR) takes the assembly file and converts the CIL into machine code with the help of the Just In Time(JIT) compiler.
 - Now, this machine code can execute on the specific architecture of the computer it is running on.
 
-### 7. Differences between value type and reference type
+### 7. lock под капотом, почему нельзя await
 
-- A Value Type holds the actual data directly within the memory location and a reference type contains a pointer which consists of the address of another memory location that holds the actual data.
-- Value type stores its contents on the stack memory and reference type stores its contents on the heap memory.
-- Assigning a value type variable to another variable will copy the value directly and assigning a reference variable to another doesn’t copy the value, instead, it creates a second copy of the reference.
-- Predefined data types, structures, enums are examples of value types. Classes, Objects, Arrays, Indexers, Interfaces, etc are examples of reference types.
-
-### 8. SOLID
-
-- single responsibility principle
-  > для каждого класса должно быть определено единственное назначение. Все ресурсы, необходимые для его осуществления, должны быть инкапсулированы в этот класс и подчинены только этой задаче
-- open-closed principle
-  > программные сущности … должны быть открыты для расширения, но закрыты для модификации
-- Liskov substitution principle
-  > функции, которые используют базовый тип, должны иметь возможность использовать подтипы базового типа не зная об этом
-- interface segregation principle
-  > много интерфейсов, специально предназначенных для клиентов, лучше, чем один интерфейс общего назначения
-- dependency inversion principle
-  > зависимость на абстракциях, нет зависимости на что-то конкретное
-
-> https://ru.wikipedia.org/wiki/SOLID_(%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)
-
-### 9. lock под капотом, почему нельзя await
-
-код, написанный между вызовами Monitor.Enter, Monitor.Exit на одном ресурсе может быть выполнен в один момент времени лишь одним потоком. Оператор lock является синтаксическим сахаром вокруг вызовов Enter/Exit обернутых в try-finally.
+код, написанный между вызовами Monitor.Enter и Monitor.Exit на одном ресурсе может быть выполнен в один момент времени лишь одним потоком. Оператор lock является синтаксическим сахаром вокруг вызовов Enter/Exit обернутых в try-finally.
 
 внутри оператора lock нельзя использовать оператор await, код после await совершенно не обязательно будет выполнен на том же потоке, что и код до await, это зависит от контекста синхронизации и наличия или отсутствия вызова ConfigureAwait. Из этого следует, что Monitor.Exit может выполниться на потоке отличном от Monitor.Enter, что приведет к выбросу **SynchronizationLockException**.
 
 > https://habr.com/ru/post/459514/
+
+
+### 8. Функции и хранимые процедуры SQL, применение и отличия
+
+|   Функция	|   Хранимая процедура	|
+|:-:	|:-:	|
+|  Функция должна возвращать значение 	|   Хранимая процедура может как возвращать, так и не возвращать значение.	|
+|   Функции не могут возвращать несколько результирующих наборов	|  Хранимая процедура может сформировать и вернуть несколько результирующих наборов данных 	|
+|  Функции можно использовать в операторе SELECT 	|  Процедуры нельзя использовать в операторе SELECT и во всех его секциях (WHERE, JOIN, HAVING и т.д.), так как процедуры вызываются с помощью команды EXECUTE или EXEC 	|
+|  В функциях можно использовать только оператор SELECT на выборку данных, операторы DML (INSERT, UPDATE, DELETE) для модификации данных использовать нельзя 	|  В хранимых процедурах можно использовать оператор SELECT, а также операторы DML (INSERT, UPDATE, DELETE) для модификации данных 	|
+|   Из функции нельзя вызвать хранимые процедуры	|   В хранимых процедурах можно вызывать и функции, и другие хранимые процедуры	|
+|  Конструкцию для обработки ошибок TRY CATCH нельзя использовать в функциях. Так же как нельзя использовать инструкцию RAISERROR 	|   В хранимых процедурах можно использовать и конструкцию TRY CATCH, и инструкцию RAISERROR	|
+|   В функциях запрещено использование транзакций	|  В хранимых процедурах транзакции разрешены 	|
+|   В функциях можно использовать только табличные переменные, временные таблицы использовать не получится	|   В хранимых процедурах можно использовать как табличные переменные, так и временные таблицы	|
+|  В функциях нельзя использовать динамический SQL 	|   В процедурах можно использовать динамический SQL	|
+|  В функциях можно использовать только входные параметры 	|   В хранимых процедурах можно использовать как входные, так и выходные параметры	|
