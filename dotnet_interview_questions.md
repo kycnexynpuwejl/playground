@@ -1,41 +1,41 @@
 
 ### 1.Уровни изоляции транзакций, какие проблемы решают  
 
-1. read uncommitted  
+1. **read uncommitted**  
    все проблемы присутствуют
 
-2. read committed  
+2. **read committed**  
    решает dirty-read
 
-3. repeatable read  
+3. **repeatable read**  
    решает dirty-read + non-repeateble-read
 
-4. serializable  
+4. **serializable**  
    решает dirty-read + non-repeateble-read + phantom-read
 
 > https://habr.com/ru/post/469415/
 
 ### 2.Оконные функции SQL
 
-***Оконная функция в SQL*** - функция, которая работает с выделенным набором строк (окном, партицией) и выполняет вычисление для этого набора строк в отдельном столбце. 
+**Оконная функция в SQL** - функция, которая работает с выделенным набором строк (окном, партицией) и выполняет вычисление для этого набора строк в отдельном столбце. 
 
-***Партиции (окна из набора строк)*** - это набор строк, указанный для оконной функции по одному из столбцов или группе столбцов таблицы. Партиции для каждой оконной функции в запросе могут быть разделены по различным колонкам таблицы.
+**Партиции (окна из набора строк)** - это набор строк, указанный для оконной функции по одному из столбцов или группе столбцов таблицы. Партиции для каждой оконной функции в запросе могут быть разделены по различным колонкам таблицы.
 
-При использовании агрегирующих функций предложение ***GROUP BY*** сокращает количество строк в запросе с помощью их группировки.
+При использовании агрегирующих функций предложение **GROUP BY** сокращает количество строк в запросе с помощью их группировки.
 
 При использовании оконных функций количество строк в запросе не уменьшается по сравнении с исходной таблицей.
 
 Классы оконных функций:
 
--Агрегирующие (Aggregate)  
--Ранжирующие (Ranking)  
--Функции смещения (Value)  
+- **Агрегирующие** (Aggregate)  
+- **Ранжирующие** (Ranking)  
+- **Функции смещения** (Value)  
 
 > https://habr.com/ru/post/664000/
 
 ### 3. IEnumerable vs IQueryable
 
-***IEnumerable in C#:***
+**IEnumerable in C#:**
 1. IEnumerable is an interface that is available in the System.Collections namespace.
 2. While querying the data from the database, the IEnumerable executes the “select statement” on the server-side (i.e. on the database), loads data into memory on the client-side, and then only applied the filters on the retrieved data.
 3. So you need to use the IEnumerable when you need to query the data from in-memory collections like List, Array, and so on.
@@ -45,7 +45,7 @@
 7. It doesn’t support custom queries.
 8. The IEnumerable doesn’t support lazy loading. Hence, it is not suitable for paging-like scenarios.
 
-***IQueryable in C#:***
+**IQueryable in C#:**
 1. The IQueryable is an interface that exists in the System.Linq Namespace.
 2. While querying the data from a database, the IQueryable executes the “select query” with the applied filter on the server-side i.e. on the database and then retrieves data.
 3. So you need to use the IQueryable when you want to query the data from out-memory such as remote database, service, etc.
@@ -118,3 +118,23 @@ INSTEAD OF: выполняется вместо действия (то есть 
 |   В функциях можно использовать только табличные переменные, временные таблицы использовать не получится	|   В хранимых процедурах можно использовать как табличные переменные, так и временные таблицы	|
 |  В функциях нельзя использовать динамический SQL 	|   В процедурах можно использовать динамический SQL	|
 |  В функциях можно использовать только входные параметры 	|   В хранимых процедурах можно использовать как входные, так и выходные параметры	|
+
+> https://info-comp.ru/differences-between-functions-and-procedures-in-t-sql
+
+### 9. Saga pattern, способы координации саг
+
+Сага представляет собой набор локальных транзакций. Каждая локальная транзакция обновляет базу данных и публикует сообщение или событие, инициируя следующую локальную транзакцию в саге. Если транзакция завершилась неудачей, например, из-за нарушения бизнес правил, тогда сага запускает компенсирующие транзакции, которые откатывают изменения, сделанные предшествующими локальными транзакциями.
+
+Существует два способа координации саг:
+
+
+- **Хореография (Choreography)** — каждая транзакция публикует события, которые запускают транзакции в других сервисах.
+- **Оркестрация (Orchestration)** — оркестратор говорит участникам, какие транзакции должны быть запущены.
+
+Сага имеет следующие преимущества
+
+- Позволяет приложению поддерживать согласованность данных между сервисами без использования распределенных транзакций.
+
+Сага имеет следующие недостатки
+
+- Модель программирования становится более сложной. Например, разработчики должны проектировать компенсирующие транзакции, которые отменяют изменения, сделанные ранее в саге.
