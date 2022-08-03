@@ -1,37 +1,22 @@
 
-### 1.Уровни изоляции транзакций, какие проблемы решают  
+### 1. How does the .NET framework work?
 
-1. **read uncommitted**  
-   все проблемы присутствуют
+- .NET framework-based applications that are written in supportive languages like C#, F#, or Visual basic are compiled to Common Intermediate Language (CIL).
+- Compiled code is stored in the form of an assembly file that has a .dll or .exe file extension.
+- When the .NET application runs, Common Language Runtime (CLR) takes the assembly file and converts the CIL into machine code with the help of the Just In Time(JIT) compiler.
+- Now, this machine code can execute on the specific architecture of the computer it is running on.
 
-2. **read committed**  
-   решает dirty-read
 
-3. **repeatable read**  
-   решает dirty-read + non-repeateble-read
+### 2. Сложность алгоритма добавления элемента в List и LinkedList. От чего зависит
 
-4. **serializable**  
-   решает dirty-read + non-repeateble-read + phantom-read
+- **List**
+  Если **Count** значение меньше **Capacity**, этот метод является операцией **O(1)**. Если емкость должна быть увеличена для размещения нового элемента, этот метод становится операцией **O(n)**, где n — Count.
+  > https://docs.microsoft.com/ru-ru/dotnet/api/system.collections.generic.list-1.add?view=net-6.0
 
-> https://habr.com/ru/post/469415/
+- **LinkedList**
+  Всегда O(1)
+  > https://docs.microsoft.com/ru-ru/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0
 
-### 2.Оконные функции SQL
-
-**Оконная функция в SQL** - функция, которая работает с выделенным набором строк (окном, партицией) и выполняет вычисление для этого набора строк в отдельном столбце. 
-
-**Партиции (окна из набора строк)** - это набор строк, указанный для оконной функции по одному из столбцов или группе столбцов таблицы. Партиции для каждой оконной функции в запросе могут быть разделены по различным колонкам таблицы.
-
-При использовании агрегирующих функций предложение **GROUP BY** сокращает количество строк в запросе с помощью их группировки.
-
-При использовании оконных функций количество строк в запросе не уменьшается по сравнении с исходной таблицей.
-
-Классы оконных функций:
-
-- **Агрегирующие** (Aggregate)  
-- **Ранжирующие** (Ranking)  
-- **Функции смещения** (Value)  
-
-> https://habr.com/ru/post/664000/
 
 ### 3. IEnumerable vs IQueryable
 
@@ -57,7 +42,53 @@
 
 > https://dotnettutorials.net/lesson/differences-between-ienumerable-and-iqueryable/
 
-### 4. Триггеры SQL
+
+### 4. Server-side pagination with EntityFramework and raw SQL
+
+1. EntityFramework - DbContext.DbSet.Skip(a).Take(b)
+   
+2. Raw SQL
+   1. LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
+   2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
+
+### 5.Уровни изоляции транзакций, какие проблемы решают  
+
+1. **read uncommitted**  
+   все проблемы присутствуют
+
+2. **read committed**  
+   решает dirty-read
+
+3. **repeatable read**  
+   решает dirty-read + non-repeateble-read
+
+4. **serializable**  
+   решает dirty-read + non-repeateble-read + phantom-read
+
+> https://habr.com/ru/post/469415/
+> https://ru.wikipedia.org/wiki/%D0%A3%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C_%D0%B8%D0%B7%D0%BE%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8_%D1%82%D1%80%D0%B0%D0%BD%D0%B7%D0%B0%D0%BA%D1%86%D0%B8%D0%B9
+
+
+### 6.Оконные функции SQL
+
+**Оконная функция в SQL** - функция, которая работает с выделенным набором строк (окном, партицией) и выполняет вычисление для этого набора строк в отдельном столбце. 
+
+**Партиции (окна из набора строк)** - это набор строк, указанный для оконной функции по одному из столбцов или группе столбцов таблицы. Партиции для каждой оконной функции в запросе могут быть разделены по различным колонкам таблицы.
+
+При использовании агрегирующих функций предложение **GROUP BY** сокращает количество строк в запросе с помощью их группировки.
+
+При использовании оконных функций количество строк в запросе не уменьшается по сравнении с исходной таблицей.
+
+Классы оконных функций:
+
+- **Агрегирующие** (Aggregate)  
+- **Ранжирующие** (Ranking)  
+- **Функции смещения** (Value)  
+
+> https://habr.com/ru/post/664000/
+
+
+### 7. Триггеры SQL
 
 Триггеры представляют специальный тип хранимой процедуры, которая вызывается автоматически при выполнении определенного действия над таблицей или представлением, в частности, при добавлении, изменении или удалении данных, то есть при выполнении команд INSERT, UPDATE, DELETE.
 
@@ -80,29 +111,6 @@ INSTEAD OF: выполняется вместо действия (то есть 
 
 > https://metanit.com/sql/sqlserver/12.1.php
 
-### 5. Server-side pagination with EntityFramework and raw SQL
-
-1. EntityFramework - DbContext.DbSet.Skip(a).Take(b)
-   
-2. Raw SQL
-   1. LIMIT(a) OFFSET(b) - **MySQL/PosetgreSQL**
-   2. OFFSET (a) ROWS FETCH FIRST (b) ROWS ONLY - **MSSQL**
-
-### 6. How does the .NET framework work?
-
-- .NET framework-based applications that are written in supportive languages like C#, F#, or Visual basic are compiled to Common Intermediate Language (CIL).
-- Compiled code is stored in the form of an assembly file that has a .dll or .exe file extension.
-- When the .NET application runs, Common Language Runtime (CLR) takes the assembly file and converts the CIL into machine code with the help of the Just In Time(JIT) compiler.
-- Now, this machine code can execute on the specific architecture of the computer it is running on.
-
-### 7. lock под капотом, почему нельзя await
-
-код, написанный между вызовами Monitor.Enter и Monitor.Exit на одном ресурсе может быть выполнен в один момент времени лишь одним потоком. Оператор lock является синтаксическим сахаром вокруг вызовов Enter/Exit обернутых в try-finally.
-
-внутри оператора lock нельзя использовать оператор await, код после await совершенно не обязательно будет выполнен на том же потоке, что и код до await, это зависит от контекста синхронизации и наличия или отсутствия вызова ConfigureAwait. Из этого следует, что Monitor.Exit может выполниться на потоке отличном от Monitor.Enter, что приведет к выбросу **SynchronizationLockException**.
-
-> https://habr.com/ru/post/459514/
-
 
 ### 8. Функции и хранимые процедуры SQL, применение и отличия
 
@@ -121,7 +129,17 @@ INSTEAD OF: выполняется вместо действия (то есть 
 
 > https://info-comp.ru/differences-between-functions-and-procedures-in-t-sql
 
-### 9. Saga pattern, способы координации саг
+
+### 9. lock под капотом, почему нельзя await
+
+код, написанный между вызовами Monitor.Enter и Monitor.Exit на одном ресурсе может быть выполнен в один момент времени лишь одним потоком. Оператор lock является синтаксическим сахаром вокруг вызовов Enter/Exit обернутых в try-finally.
+
+внутри оператора lock нельзя использовать оператор await, код после await совершенно не обязательно будет выполнен на том же потоке, что и код до await, это зависит от контекста синхронизации и наличия или отсутствия вызова ConfigureAwait. Из этого следует, что Monitor.Exit может выполниться на потоке отличном от Monitor.Enter, что приведет к выбросу **SynchronizationLockException**.
+
+> https://habr.com/ru/post/459514/
+
+
+### 10. Saga pattern, способы координации саг
 
 Сага представляет собой набор локальных транзакций. Каждая локальная транзакция обновляет базу данных и публикует сообщение или событие, инициируя следующую локальную транзакцию в саге. Если транзакция завершилась неудачей, например, из-за нарушения бизнес правил, тогда сага запускает компенсирующие транзакции, которые откатывают изменения, сделанные предшествующими локальными транзакциями.
 
@@ -141,15 +159,47 @@ INSTEAD OF: выполняется вместо действия (то есть 
 
 > https://habr.com/ru/post/427705/
 
-### 10. Сложность алгоритма добавления элемента в List и LinkedList. От чего зависит
 
-- **List**
-  Если **Count** значение меньше **Capacity**, этот метод является операцией **O(1)**. Если емкость должна быть увеличена для размещения нового элемента, этот метод становится операцией **O(n)**, где n — Count.
-  > https://docs.microsoft.com/ru-ru/dotnet/api/system.collections.generic.list-1.add?view=net-6.0
+### 11. Способы конфигурации моделей и сущностей при подходе code-first в EF
 
-- **LinkedList**
-  Всегда O(1)
-  > https://docs.microsoft.com/ru-ru/dotnet/api/system.collections.generic.linkedlist-1?view=net-6.0
+- **Code convention**
+- **DataAnnotation**
+- **Fluent API**
 
-### 11. 
-  
+> https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/conventions/built-in
+> https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/conventions/custom
+> https://www.ecanarys.com/Blogs/ArticleID/228/Entity-Framework-CodeFirst-Approach
+
+### 12. Процесс сборки мусора, этапы
+
+**Этап маркировки**
+
+Во время этого этапа CLR должна найти все живые объекты.
+
+
+Преимущество сборщика с поддержкой поколений заключается в его способности убирать мусор только в части кучи, вместо того, чтобы всё время наблюдать за всеми объектами. Собирая мусор в эфемерных поколениях, сборщик должен получить у среды исполнения информацию о том, какие объекты в этих поколениях по-прежнему используются программой. Кроме того, объекты в старших поколениях могут использовать объекты в младших поколениях, ссылаясь на них.
+
+
+Чтобы пометить старые объекты, ссылающиеся на новые, сборщик мусора использует специальные биты. Биты устанавливаются механизмом JIT-компилятора во время операций присвоения. Если объект принадлежит к эфемерному поколению, JIT-компилятор установит байт, содержащий бит, указывающий на исходное положение. Собирая мусор в эфемерных поколениях, сборщик может использовать эти биты для всей оставшейся кучи и просмотреть только те объекты, которым эти биты соответствуют.
+
+
+**Этап планирования**
+
+На этом этапе моделируется сжатие, чтобы определить его эффективность. Если результат оказывается продуктивным, сборщик начинает фактическое сжатие. В противном случае он просто производит уборку.
+
+
+**Этап перемещения**
+
+Если сборщик выполняет сжатие, это приведёт к перемещению объектов. В этом случае необходимо обновить ссылки на эти объекты. Во время этапа перемещения сборщик должен найти все ссылки, указывающие на объекты в тех поколениях, где проводится сборка мусора. Напротив, во время стадии маркировки сборщик помечает только живые объекты, поэтому ему не нужно рассматривать слабые ссылки.
+
+
+**Этап сжатия**
+
+Этот этап достаточно прост, поскольку сборщик уже определил новые адреса для перемещения объектов во время этапа планирования. При сжатии объекты будут скопированы по этим адресам.
+
+
+**Этап уборки**
+
+Во время этого этапа сборщик ищет неиспользуемое пространство между живыми объектами. Вместо этого пространства он создаёт свободные объекты. Неиспользуемые объекты, находящиеся рядом, становятся одним свободным объектом. Все свободные объекты помещаются в список свободных объектов.
+
+> https://habr.com/ru/company/clrium/blog/463293/
