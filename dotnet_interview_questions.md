@@ -170,6 +170,7 @@ INSTEAD OF: выполняется вместо действия (то есть 
 > https://docs.microsoft.com/en-us/ef/ef6/modeling/code-first/conventions/custom
 > https://www.ecanarys.com/Blogs/ArticleID/228/Entity-Framework-CodeFirst-Approach
 
+
 ### 12. Процесс сборки мусора, этапы
 
 **Этап маркировки**
@@ -203,3 +204,53 @@ INSTEAD OF: выполняется вместо действия (то есть 
 Во время этого этапа сборщик ищет неиспользуемое пространство между живыми объектами. Вместо этого пространства он создаёт свободные объекты. Неиспользуемые объекты, находящиеся рядом, становятся одним свободным объектом. Все свободные объекты помещаются в список свободных объектов.
 
 > https://habr.com/ru/company/clrium/blog/463293/
+
+
+### 13. Action Filters
+
+An action filter is an attribute that you can apply to a controller action -- or an entire controller -- that modifies the way in which the action is executed.
+
+You also can create your own custom action filters. For example, you might want to create a custom action filter in order to implement a custom authentication system. Or, you might want to create an action filter that modifies the view data returned by a controller action.
+
+The ASP.NET MVC framework supports four different types of filters:
+
+1. **Authorization filters** – Implements the IAuthorizationFilter attribute.
+2. **Action filters** – Implements the IActionFilter attribute.
+3. **Result filters** – Implements the IResultFilter attribute.
+4. **Exception filters** – Implements the IExceptionFilter attribute.
+
+
+### 14. Git Merge vs Git Rebase
+
+**Способ слияния (merge)**
+
+Слияние (merge) — это отличная неразрушающая операция. Существующие ветки никак не изменяются. Эта операция позволяет избегать потенциальных проблем, связанных с выполнением команды rebase.
+
+С другой стороны, это означает, что каждый раз, когда вам будет необходимо включить вышестоящие изменения, в функциональную ветку feature будет попадать внешний коммит слияния. Если работа в главной ветке main ведется активно, история вашей функциональной ветки быстро засорится. Хотя эту проблему можно устранить, используя продвинутые варианты команды git log, другим разработчикам будет тяжело разобраться в истории проекта.
+
+**Способ перебазирования (rebase)**
+
+Если вместо команды merge при коммитах используется rebase, эта команда перезаписывает историю проекта, создавая новые коммиты для каждого коммита в исходной ветке.
+
+> https://www.edureka.co/blog/git-rebase-vs-merge/#:~:text=Git%20Merge%20Vs%20Git%20Rebase%3A&text=Git%20merge%20is%20a%20command,of%20the%20merging%20of%20commits.
+> https://www.atlassian.com/ru/git/tutorials/merging-vs-rebasing
+
+
+### 15. Что выведет?
+
+Console.WriteLine(~1);
+Console.WriteLine(6 ^ 2);
+
+> -2
+> 4
+
+
+### 16. Принудительное завершение Task
+
+The Task class supports cooperative cancellation and is fully integrated with the System.Threading.CancellationTokenSource and System.Threading.CancellationToken classes, which were introduced in the .NET Framework 4. Many of the constructors in the System.Threading.Tasks.Task class take a CancellationToken object as an input parameter. Many of the StartNew and Run overloads also include a CancellationToken parameter.
+
+You can create the token, and issue the cancellation request at some later time, by using the CancellationTokenSource class. Pass the token to the Task as an argument, and also reference the same token in your user delegate, which does the work of responding to a cancellation request.
+
+> https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/task-based-asynchronous-programming
+
+
